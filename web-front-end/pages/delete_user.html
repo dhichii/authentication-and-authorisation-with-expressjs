@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Delete User</title>
+    <link rel="stylesheet" href="../styles/styles.css">
+</head>
+
+<body>
+    <h1>Delete User</h1>
+    <form id="delete-user-form">
+        <label for="other-username">Other Username:</label>
+        <input type="text" id="other-username" name="username" required>
+        <button type="submit">Delete User</button>
+    </form>
+
+    <script>
+        document.getElementById('delete-user-form').addEventListener('submit', async function (event) {
+            event.preventDefault();
+            const username = document.getElementById('other-username').value;
+            const response = await fetch('http://127.0.0.1:4001/auth/delete/user', {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ username }),
+                credentials: "include"
+
+            });
+            const result = await response.json();
+            // handle response
+            if (result.ok) {
+                alert('User deleted successfully');
+            }else{
+                alert(result.message);
+            }
+        });
+    </script>
+</body>
+
+</html>
